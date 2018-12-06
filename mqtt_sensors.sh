@@ -116,11 +116,41 @@ RTIME=0
 
 while [ $RUN -eq 1 ]
 do
+
+
+	TTIME=$(GetMT)
+	let TX=RTIME+$SENSETIME
+	sentCNT=0
+
+
+		let WT=$TX-$TTIME
+		SLEEPTIME=$(echo "scale=2;"$WT"/1000" | bc -l)
+		mlog "Sleep for $SLEEPTIME seconds"
+
+	while [ $TX -gt $TTIME ]
+	do
+		let WT=$TX-$TTIME
+		SLEEPTIME=$(echo "scale=2;"$WT"/1000" | bc -l)
+		mlog "Sleep for $SLEEPTIME seconds"
+
+		RESCAN=$(cat "$RESCANTRIGGER")
+		if [ "$RESCAN" == "1" ]
+		then
+			TX=0
+		else
+			sleep 0.5
+			TTIME=$(GetMT)
+		fi
+	done
+
+
+
+
 	RESCAN=$(cat "$RESCANTRIGGER")
 	echo "0" > "$RESCANTRIGGER"
 	if [ "$RESCAN" == "1" ]
 	then
-		allfiles=$(find $OWFSMOUNTDIR/[1-9]* -type f | grep -E "temperature|humidity|sensed.A|sensed.B" | grep -v -E "temperature9|temperature10|temperature11|temperature12|TAI8570|HIH|HTM")
+		allfiles=$(find $OWFSMOUNTDIR/[2-9]* -type f | grep -E "temperature|humidity|sensed.A|sensed.B" | grep -v -E "temperature9|temperature10|temperature11|temperature12|TAI8570|HIH|HTM")
 		ic=0
 		for itemA in $allfiles
 			do
@@ -132,17 +162,7 @@ do
 
 
 
-	TTIME=$(GetMT)
-	let TX=RTIME+$SENSETIME
-	sentCNT=0
 
-	if [ $TX -gt $TTIME ]
-	then
-		let WT=$TX-$TTIME
-		SLEEPTIME=$(echo "scale=2;"$WT"/1000" | bc -l)
-		mlog "Sleep for $SLEEPTIME seconds"
-		sleep $SLEEPTIME
-	fi
 
 	for mfile in $allfiles
 	do
