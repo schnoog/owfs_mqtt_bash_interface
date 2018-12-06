@@ -1,0 +1,27 @@
+#####################
+####
+#### SETTINGS
+####
+####
+#####################
+# MQTT Settings
+# MQTT Broker IP/DN
+_MQTTHOST="mqttbroker"
+# MQTT Broker Port
+_MQTTPORT=1883
+# MQTT Username
+_MQTTUSER="user"
+# MQTT Password
+_MQTTPASS="password"
+# MQTT Quality of service: 0-deliver the message once, with no confirmation / 1-deliver the message at least once / 2-deliver the message exactly once
+_MQTTQOS=2			
+
+MQTTMAINTOPIC="MAINTOPIC"
+MQTTCOMMANDTOPIC="$MQTTMAINTOPIC""/CMD"
+
+OWFSMOUNTDIR="/mnt/1wire"
+
+#SENSETIME -> Sense each x ms
+SENSETIME=10000
+#RESCANTRIGGER -> echo 1 into this file to rescan whole 1w bus and resend all values #I use a file on ramdisk
+RESCANTRIGGER="/tmp/rescanfile"
