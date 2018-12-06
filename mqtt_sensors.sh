@@ -44,6 +44,7 @@ function mlog () {
 ###
 #####################
 echo "1" > "$RESCANTRIGGER"
+echo "1" > "$RUNSCANFILE"
 #####################
 ###
 ###
@@ -109,12 +110,12 @@ function GetRealValue {
 ###
 ####################
 
-RUN=1
+RUN=$(cat "$RUNSCANFILE")
 RTIME=0
 
 
 
-while [ $RUN -eq 1 ]
+while [ "$RUN" == "1" ]
 do
 
 
@@ -209,9 +210,9 @@ do
 
 
 	mlog "Sent $sentCNT items"
-
+	
 	RTIME=$TTIME
-
+	RUN=$(cat "$RUNSCANFILE")
 done
 
 

@@ -1,27 +1,62 @@
 #####################
 ####
-#### SETTINGS
+#### General-SETTINGS
 ####
 ####
 #####################
-# MQTT Settings
-# MQTT Broker IP/DN
-_MQTTHOST="mqttbroker"
-# MQTT Broker Port
-_MQTTPORT=1883
-# MQTT Username
-_MQTTUSER="user"
-# MQTT Password
-_MQTTPASS="password"
-# MQTT Quality of service: 0-deliver the message once, with no confirmation / 1-deliver the message at least once / 2-deliver the message exactly once
-_MQTTQOS=2			
-
-MQTTMAINTOPIC="MAINTOPIC"
-MQTTCOMMANDTOPIC="$MQTTMAINTOPIC""/CMD"
-
+#
+# SENSETIME - read sensor after $SENSETIME milliseconds
+# 	after this time all changed sensor values will be published
+# MQTTMAINTOPIC -this is the highest level topic unsed in the script
+# MQTTCOMMANDTOPIC - Callback topic.
+#
+SENSETIME=30000
+MQTTMAINTOPIC="GB"
+MQTTCOMMANDTOPIC="$MQTTMAINTOPIC""/CMD/#"
+#####################
+####
+#### PATH-SETTINGS
+####
+####
+#####################
+#
+# FAST-ACCESS-FILES
+# The following paths will be used to store small files (mostly on 1 or 0) for fast and extensive access
+# Therefore a tmpfs is the best way to do this 
+#
+# RAMFS Path to a tmpfs directory - on most linux systems /dev/shm will be fine 
+# RESCANTRIGGER - If this file contains a 1, a rescan will be launched and all values reported
+# RUNSCANFILE - If a 0 is written into this file, the scanner stops after the current time cycle ended
+#
+#
+RAMFS="/dev/shm/"
+RESCANTRIGGER="$RAMFS""rescan4mqtt"
+RUNSCANFILE="$RAMFS"run_scanner
+#####################
+####
+#### OWFS-SETTINGS
+####
+####
+#####################
 OWFSMOUNTDIR="/mnt/1wire"
+#####################
+####
+#### MQTT-BROKER-SETTINGS
+####
+####
+#####################
+# _MQTTHOST - MQTT Broker IP/DN
+# _MQTTPORT - MQTT Broker Port
+# _MQTTUSER - MQTT Username
+# _MQTTPASS - MQTT Password
+# _MQTTQOS - MQTT Quality of service: 0-deliver the message once, with no confirmation / 1-deliver the message at least once / 2-deliver the message exactly once
+#
+_MQTTHOST="broker"
+_MQTTPORT=1883
+_MQTTUSER="user"
+_MQTTPASS="pass"
+_MQTTQOS=2			
+#####################
 
-#SENSETIME -> Sense each x ms
-SENSETIME=10000
-#RESCANTRIGGER -> echo 1 into this file to rescan whole 1w bus and resend all values #I use a file on ramdisk
-RESCANTRIGGER="/tmp/rescanfile"
+
+
