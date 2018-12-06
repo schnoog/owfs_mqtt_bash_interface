@@ -3,19 +3,25 @@ MYIFS=$IFS
 IFS="
 "
 
-SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
-#####################
-####
-#### SETTINGS
-####	source settings.cfg
-####
-#####################
-SETTINGSFILE="$SCRIPT_DIR""/settings.cfg"
-source "$SETTINGSFILE"
-#####################
-#
-#
-#
+
+#####################################################################
+####								#####
+#### SETTINGS							#####
+####	source settings.cfg					#####
+####								#####
+#####################################################################
+source "$(dirname "$(readlink -f "$0")")""/settings.cfg"
+#####################################################################
+####								#####
+#### FUNCTIONS							#####
+####	include functions.def					#####
+####								#####
+#####################################################################
+source "$(dirname "$(readlink -f "$0")")""/functions.def"
+#####################################################################
+#####################################################################
+
+
 #####################
 declare -A MYDATA
 declare -A CHANGENUM
@@ -49,62 +55,7 @@ echo "1" > "$RUNSCANFILE"
 ###
 ###
 ###
-#####################
-function publish {
-echo $1 | mosquitto_pub -h $_MQTTHOST -p $_MQTTPORT -u $_MQTTUSER -P $_MQTTPASS -q $_MQTTQOS -t $2 -l
-}
 
-#####################
-##
-##
-##
-#####################
-
-
-function GetMT {
-	echo $(($(date +%s%N)/1000000))
-}
-####################
-###
-###
-####################
-function FinalRound {
-	tmp=$(expr index "$1" ".")
-	if [ $tmp -eq 0 ]
-	then
-		echo $1
-	else
-		echo "scale=1; ("$1" * 10)/10" | bc -l
-	fi
-}
-
-#####################
-##
-##
-##
-#####################
-function GetRealValue {
-	did=$1
-	val=$2
-	sid=${did:0:3}
-	if [ "$sid" == "28." ]
-	then
-
-		erg=$( echo "$val > 70" | bc)
-		if [ $erg == "1" ]
-		then
-			nv=$(echo "$val""*3.2+700" | bc)
-			FinalRound $nv
-		else
-			FinalRound $val
-		fi
-
-
-	else
-		FinalRound $val
-	fi
-
-}
 ####################
 ###
 ###
