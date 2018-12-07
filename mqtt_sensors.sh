@@ -95,8 +95,9 @@ do
 
 	for mfile in $allfiles
 	do
-
-		mid=${mfile:11}
+		FDIR="$OWFSMOUNTDIR""/"
+		startlen=${#FDIR}
+		mid=${mfile:startlen}
 		id=$(echo "$mid" | sed 's/\//_/g')
 		TMPDATA=$(cat "$mfile")
 		DATA=$(GetRealValue "$id" "$TMPDATA")

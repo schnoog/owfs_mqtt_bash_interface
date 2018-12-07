@@ -114,8 +114,9 @@ function PublishSingleDevice {
 		items=$(find "$device" -type f | grep -E "temperature|humidity|sensed.A|sensed.B" | grep -v -E "temperature9|temperature10|temperature11|temperature12|TAI8570|HIH|HTM")
 	for mfile in $items
 	do
-
-		mid=${mfile:11}
+		FDIR="$OWFSMOUNTDIR""/"
+		startlen=${#FDIR}
+		mid=${mfile:startlen}
 		
 		id=$(echo "$mid" | sed 's/\//_/g')
 		TMPDATA=$(cat "$mfile")
