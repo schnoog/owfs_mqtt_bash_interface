@@ -15,12 +15,6 @@ A small set of bash scripts.
 - **getdevice <device-id>** - queries a single device and reports all values
 
 ## Requirements:
-mosquitto-client (mosquitto_pub & mosquitto_sub)
-Bash 4
-GNUTools like cat, grep, awk
-and
-a mosquitto broker to report to
-
 - mosquitto-client (mosquitto_pub & mosquitto_sub)
 - Bash 4
 - GNUTools like cat, grep, awk
@@ -29,4 +23,5 @@ a mosquitto broker to report to
 - screen (if you want to use the included start/stop scripts)
 - and
 - a mosquitto broker to report to
+- Optional but recommanded: A tmpfs drive (most linux installation come with at least one active tmpfs mount per default)
 
