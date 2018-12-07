@@ -5,19 +5,19 @@ IFS="
 
 
 #####################################################################
-####								#####
-#### SETTINGS							#####
-####	source settings.cfg					#####
-####								#####
+####															#####
+#### SETTINGS													#####
+####	source settings.cfg										#####
+####															#####
 #####################################################################
 source "$(dirname "$(readlink -f "$0")")""/settings.cfg"
 #####################################################################
-####								#####
-#### FUNCTIONS							#####
-####	include functions.def					#####
-####								#####
+####															#####
+#### FUNCTIONS													#####
+####	include functions.sh									#####
+####															#####
 #####################################################################
-source "$(dirname "$(readlink -f "$0")")""/functions.def"
+source "$(dirname "$(readlink -f "$0")")""/functions.sh"
 #####################################################################
 #####################################################################
 
@@ -35,8 +35,21 @@ do
 		echo "Forcing rescan"
 		echo "1" > "$RESCANTRIGGER"
 	fi
- 		
-
+ 	msg="getdevice"	
+	if [ "$(echo "$RAW_DATA" | grep -i "$msg" | wc -l)" == "1" ]
+	then
+		device=$(echo $RAW_DATA | awk '{print $2}' |  grep -P '^[0-9a-fA-F]{2}\.[0-9a-fA-F]{12}$' )
+		if [ $device != "" ]
+		then
+			PublishSingleDevice "$device"
+			echo "Single Device Scan"
+		fi
+	fi
+ 	msg="devices"	
+	if [ "$(echo "$RAW_DATA" | grep -i "$msg" | wc -l)" == "1" ]
+	then
+		PublishDeviceList
+	fi
 
 
 

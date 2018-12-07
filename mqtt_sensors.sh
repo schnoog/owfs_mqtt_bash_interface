@@ -5,19 +5,19 @@ IFS="
 
 
 #####################################################################
-####								#####
-#### SETTINGS							#####
-####	source settings.cfg					#####
-####								#####
+####															#####
+#### SETTINGS													#####
+####	source settings.cfg										#####
+####															#####
 #####################################################################
 source "$(dirname "$(readlink -f "$0")")""/settings.cfg"
 #####################################################################
-####								#####
-#### FUNCTIONS							#####
-####	include functions.def					#####
-####								#####
+####															#####
+#### FUNCTIONS													#####
+####	include functions.sh									#####
+####															#####
 #####################################################################
-source "$(dirname "$(readlink -f "$0")")""/functions.def"
+source "$(dirname "$(readlink -f "$0")")""/functions.sh"
 #####################################################################
 #####################################################################
 
@@ -25,26 +25,6 @@ source "$(dirname "$(readlink -f "$0")")""/functions.def"
 #####################
 declare -A MYDATA
 declare -A CHANGENUM
-#####################
-###
-###
-###
-#####################
-_V=0
-while getopts "v" OPTION
-do
-  case $OPTION in
-    v) _V=1
-       ;;
-
-  esac
-done
-###
-function mlog () {
-    if [[ $_V -eq 1 ]]; then
-        echo "$@"
-    fi
-}
 #####################
 ###
 ###
@@ -70,20 +50,17 @@ while [ "$RUN" == "1" ]
 do
 
 
+
+
 	TTIME=$(GetMT)
 	let TX=RTIME+$SENSETIME
 	sentCNT=0
-
-
-		let WT=$TX-$TTIME
-		SLEEPTIME=$(echo "scale=2;"$WT"/1000" | bc -l)
-		mlog "Sleep for $SLEEPTIME seconds"
 
 	while [ $TX -gt $TTIME ]
 	do
 		let WT=$TX-$TTIME
 		SLEEPTIME=$(echo "scale=2;"$WT"/1000" | bc -l)
-		mlog "Sleep for $SLEEPTIME seconds"
+		mlog "$SLEEPTIME seconds until next scan"
 
 		RESCAN=$(cat "$RESCANTRIGGER")
 		if [ "$RESCAN" == "1" ]
