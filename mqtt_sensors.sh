@@ -79,7 +79,7 @@ do
 	echo "0" > "$RESCANTRIGGER"
 	if [ "$RESCAN" == "1" ]
 	then
-		allfiles=$(find $OWFSMOUNTDIR/[2-9]* -type f | grep -E "temperature|humidity|sensed.A|sensed.B" | grep -v -E "temperature9|temperature10|temperature11|temperature12|TAI8570|HIH|HTM")
+		allfiles=$(find $OWFSMOUNTDIR/[1-9]* -type f | grep -E "temperature|humidity|sensed.A|sensed.B" | grep -v -E "temperature9|temperature10|temperature11|temperature12|TAI8570|HIH|HTM")
 		ic=0
 		for itemA in $allfiles
 			do
