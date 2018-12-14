@@ -6,7 +6,7 @@ A small set of bash scripts.
 - (026	1-​Wire Barometer/Temperatur/Luftfeuchte, https://www.tm3d.de/shop/kategorien/module)
 - At first read out all values are reported, after a configurable delay the next read out will be performed
 - Only changed values (rounded to x.y) will be reported.
-
+ 
 ## Callback
 - Subscribes to the mqtt brokers CMD topic and will execute predefined commands
 - for example:
