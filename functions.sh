@@ -36,7 +36,7 @@ function GetMT {
 #####################
 #####################
 function publish {
-echo $1 | mosquitto_pub -h $_MQTTHOST -p $_MQTTPORT -u $_MQTTUSER -P $_MQTTPASS -q $_MQTTQOS -t $2 -l
+echo $1 | mosquitto_pub -h $_MQTTHOST -p $_MQTTPORT -u $_MQTTUSER -P $_MQTTPASS -q $_MQTTQOS -M 20 -t $2 -l
 }
 
 ####################
