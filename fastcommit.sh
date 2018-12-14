@@ -1,7 +1,7 @@
 #!/bin/bash
 
 tmp="fast commit"
-if [ "$@" != "" ]
+if [ "$1" != "" ]
 then
 tmp="$@"
 fi
